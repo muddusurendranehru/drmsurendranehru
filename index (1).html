@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. M Surendra Nehru MD | Metabolic Medicine Specialist</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #001f3f;
+            --gold: #c5a059;
+            --white: #ffffff;
+            --light-gray: #f4f4f4;
+            --dark-gray: #333333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-gray);
+            background-color: var(--white);
+        }
+
+        h1, h2, h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--navy);
+        }
+
+        header {
+            background-color: var(--navy);
+            color: var(--gold);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid var(--gold);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--gold);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--white);
+            font-weight: 600;
+            transition: color 0.3s;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+
+        .hero {
+            background: linear-gradient(rgba(0, 31, 63, 0.8), rgba(0, 31, 63, 0.8)), url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: var(--white);
+            padding: 6rem 2rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            color: var(--gold);
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--gold);
+            color: var(--navy);
+            padding: 0.8rem 2rem;
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 4px;
+            transition: background 0.3s;
+            text-transform: uppercase;
+        }
+
+        .btn:hover {
+            background-color: #b38f4d;
+        }
+
+        .section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .home-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .photo-placeholder {
+            background-color: var(--light-gray);
+            border: 2px solid var(--gold);
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--navy);
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+        }
+
+        .credentials h2 {
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--gold);
+            display: inline-block;
+        }
+
+        .stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            flex: 1;
+            padding: 1.5rem;
+            background: var(--light-gray);
+            border-top: 4px solid var(--gold);
+        }
+
+        .stat-item span {
+            display: block;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--navy);
+        }
+
+        footer {
+            background-color: var(--navy);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+            border-top: 2px solid var(--gold);
+        }
+
+        .patient-portal-btn {
+            background-color: #d4af37;
+            color: #001f3f;
+            border: none;
+            padding: 10px 20px;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 768px) {
+            .home-grid {
+                grid-template-columns: 1fr;
+            }
+            .nav-links {
+                display: none;
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <nav>
+        <a href="index.html" class="logo">DR. M SURENDRA NEHRU</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="books.html">Books</a></li>
+            <li><a href="research.html">Research</a></li>
+            <li><a href="lectures.html">Lectures & CME</a></li>
+            <li><a href="videos.html">Videos</a></li><li><a href="https://drmuddusurendranehru.blogspot.com" target="_blank">Blog</a></li><li><a href="contact.html">Contact</a></li>
+        </ul>
+        <a href="https://wa.me/919963721999" target="_blank" class="patient-portal-btn">WhatsApp Us</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <h1>Dr. M Surendra Nehru MD</h1>
+    <p>Professor of Medicine & Metabolic Medicine Specialist</p>
+    <a href="contact.html" class="btn">Book Consultation</a>
+</section>
+
+<section class="section">
+    <div class="home-grid">
+        <div class="photo-placeholder" style="background:none;border:3px solid var(--gold);padding:0;overflow:hidden;">
+            <img src="SNHIMA1.jpg" alt="Dr. M Surendra Nehru MD" style="width:100%;height:100%;object-fit:cover;object-position:top;">
+        </div>
+        <div class="credentials">
+            <h2>Credentials & Experience</h2>
+            <p>Dr. M Surendra Nehru is a distinguished <strong>Professor of Medicine</strong> and a leading <strong>Metabolic Medicine Specialist</strong> based in Hyderabad, India. With nearly four decades of clinical experience, he has dedicated his career to advancing metabolic health and diabetes care.</p>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <span>37+</span>
+                    Years Experience
+                </div>
+                <div class="stat-item">
+                    <span>8058</span>
+                    RSSDI Life Member
+                </div>
+            </div>
+            
+            <p style="margin-top: 2rem;">Specializing in the <strong>HOMA Quadrant System</strong> and <strong>Insulin Resistance Management</strong>, Dr. Nehru is at the forefront of metabolic research and patient-centric care.</p>
+        </div>
+    </div>
+</section>
+
+<section style="background:#001f3f;padding:3rem 2rem;">
+    <div style="max-width:1200px;margin:0 auto;text-align:center;">
+        <h2 style="font-family:'Cinzel',serif;color:#c5a059;margin-bottom:0.5rem;font-size:1.6rem;">Explore Dr. Nehru's Work</h2>
+        <p style="color:#ccc;margin-bottom:2rem;font-size:0.95rem;">Clinical education, research and medical writing — all in one place</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.5rem;max-width:900px;margin:0 auto;">
+            <a href="videos.html" style="background:#002d5c;border:1px solid #c5a059;padding:1.5rem 1rem;text-decoration:none;color:#fff;transition:background 0.3s;">
+                <div style="font-size:2rem;margin-bottom:0.5rem;">📹</div>
+                <div style="font-family:'Cinzel',serif;color:#c5a059;font-size:1rem;margin-bottom:0.3rem;">Videos</div>
+                <div style="font-size:0.8rem;color:#ccc;">Telugu & English</div>
+            </a>
+            <a href="books.html" style="background:#002d5c;border:1px solid #c5a059;padding:1.5rem 1rem;text-decoration:none;color:#fff;transition:background 0.3s;">
+                <div style="font-size:2rem;margin-bottom:0.5rem;">📚</div>
+                <div style="font-family:'Cinzel',serif;color:#c5a059;font-size:1rem;margin-bottom:0.3rem;">Books</div>
+                <div style="font-size:0.8rem;color:#ccc;">14 Publications on Amazon</div>
+            </a>
+            <a href="research.html" style="background:#002d5c;border:1px solid #c5a059;padding:1.5rem 1rem;text-decoration:none;color:#fff;transition:background 0.3s;">
+                <div style="font-size:2rem;margin-bottom:0.5rem;">🔬</div>
+                <div style="font-family:'Cinzel',serif;color:#c5a059;font-size:1rem;margin-bottom:0.3rem;">Research</div>
+                <div style="font-size:0.8rem;color:#ccc;">3 Indexed Papers 2026</div>
+            </a>
+            <a href="https://drmuddusurendranehru.blogspot.com" target="_blank" style="background:#002d5c;border:1px solid #c5a059;padding:1.5rem 1rem;text-decoration:none;color:#fff;transition:background 0.3s;">
+                <div style="font-size:2rem;margin-bottom:0.5rem;">✍️</div>
+                <div style="font-family:'Cinzel',serif;color:#c5a059;font-size:1rem;margin-bottom:0.3rem;">Blog</div>
+                <div style="font-size:0.8rem;color:#ccc;">132 Clinical Articles</div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p>&copy; 2026 Dr. M Surendra Nehru. All rights reserved.</p>
+    <p>Gachibowli, Hyderabad | 09963721999</p>
+</footer>
+
+</body>
+</html>
