@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>HOMA Metabolic Assessment Calculator — Dr. Nehru Method</title>
+<style>
+  :root{
+    --navy:#0b2545; --navy2:#123a6b; --gold:#c9a227; --gold-light:#f3e6b8;
+    --saffron:#FF9933; --white:#ffffff; --green:#138808;
+    --ink:#1a1f2b; --muted:#5b6472; --bg:#f4f6f9; --danger:#b3261e; --ok:#1e6b3f;
+    --card:#ffffff; --line:#e1e6ee;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);font-family:'Trebuchet MS',Segoe UI,Arial,sans-serif;color:var(--ink);}
+  .stripe{height:8px;display:flex;}
+  .stripe div{flex:1;}
+  .stripe .s{background:var(--saffron);} .stripe .w{background:#fff;border-top:1px solid #ddd;border-bottom:1px solid #ddd;} .stripe .g{background:var(--green);}
+  header{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;padding:22px 28px;text-align:center;position:relative;}
+  header h1{margin:0;font-size:1.5rem;letter-spacing:.3px;}
+  header p{margin:6px 0 0;color:var(--gold-light);font-size:.9rem;}
+  .chakra{width:26px;height:26px;border:2px solid var(--gold);border-radius:50%;display:inline-block;position:relative;vertical-align:middle;margin-right:8px;}
+  .chakra:after{content:"";position:absolute;inset:6px;border-radius:50%;background:
+    repeating-conic-gradient(var(--gold) 0deg 15deg, transparent 15deg 30deg);}
+  main{max-width:980px;margin:0 auto;padding:22px 16px 60px;}
+  .section{background:var(--card);border:1px solid var(--line);border-radius:10px;margin-bottom:18px;overflow:hidden;box-shadow:0 1px 3px rgba(20,30,60,.06);}
+  .section h2{margin:0;background:var(--navy);color:#fff;padding:12px 18px;font-size:1rem;letter-spacing:.4px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;padding:18px;}
+  label{display:block;font-size:.78rem;color:var(--muted);margin-bottom:4px;font-weight:600;}
+  input,select{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:6px;font-size:.92rem;background:#fbfcfe;}
+  input:focus,select:focus{outline:2px solid var(--gold);border-color:var(--gold);}
+  .results{padding:18px;background:#fbfaf2;border-top:2px solid var(--gold);}
+  .results h2{background:none;color:var(--navy);padding:0 0 10px;font-size:1.05rem;}
+  .rgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;}
+  .rcard{background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px 12px;border-left:5px solid var(--muted);}
+  .rcard .lbl{font-size:.75rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.3px;}
+  .rcard .val{font-size:1.3rem;font-weight:700;margin:2px 0;}
+  .rcard .tag{font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:20px;display:inline-block;}
+  .rcard.normal{border-left-color:var(--ok);} .rcard.normal .tag{background:#e3f3e8;color:var(--ok);}
+  .rcard.abnormal{border-left-color:var(--danger);} .rcard.abnormal .tag{background:#fbe4e2;color:var(--danger);}
+  .rcard.pending{border-left-color:var(--line);} .rcard.pending .tag{background:#eef1f5;color:var(--muted);}
+  .note{font-size:.72rem;color:var(--muted);margin-top:6px;}
+  .footer{padding:16px 18px;background:var(--navy);color:var(--gold-light);font-size:.75rem;text-align:center;border-radius:0 0 10px 10px;}
+  .patient-bar{display:flex;flex-wrap:wrap;gap:10px;padding:16px 18px;background:#fff;border:1px solid var(--line);border-radius:10px;margin-bottom:18px;}
+  .patient-bar > div{flex:1;min-width:150px;}
+  .keybox{border:2px solid var(--gold);background:#fffdf3;border-radius:8px;padding:14px 16px;margin:0 18px 18px;}
+  .keybox b{color:var(--navy);}
+  .print-btn{background:var(--gold);color:var(--navy);border:none;padding:10px 18px;border-radius:6px;font-weight:700;cursor:pointer;font-size:.9rem;}
+  .print-btn:hover{opacity:.9;}
+  .gaugerow{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;padding:0 18px 18px;}
+  .gaugebox{background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px;text-align:center;}
+  .gaugebox .gtitle{font-size:.8rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.3px;margin-bottom:6px;}
+  .gaugewrap{position:relative;width:180px;height:96px;margin:0 auto;}
+  .gaugearc{width:180px;height:90px;border-radius:180px 180px 0 0;overflow:hidden;
+    background:conic-gradient(from -90deg,var(--ok) 0deg,var(--ok) 65deg,#e6c229 65deg,#e6c229 100deg,#e28a1a 100deg,#e28a1a 130deg,var(--danger) 130deg,var(--danger) 180deg);
+    -webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .gaugemask{position:absolute;left:20px;top:20px;width:140px;height:70px;background:#fff;border-radius:140px 140px 0 0;}
+  .needle{position:absolute;left:90px;bottom:0;width:3px;height:80px;background:var(--ink);transform-origin:bottom center;transform:rotate(0deg);}
+  .needlebase{position:absolute;left:84px;bottom:-6px;width:12px;height:12px;border-radius:50%;background:var(--ink);}
+  .gval{font-size:1.15rem;font-weight:700;margin-top:6px;color:var(--navy);}
+  .gcut{font-size:.68rem;color:var(--muted);}
+  @media print{ .no-print{display:none;} body{background:#fff;} }
+</style>
+</head>
+<body>
+
+<div class="stripe"><div class="s"></div><div class="w"></div><div class="g"></div></div>
+<header>
+  <h1><span class="chakra"></span>HOMA Metabolic Assessment Calculator</h1>
+  <p>The Dr. Nehru Method — India-Specific Cutoffs — HOMA Healthcare Center, Hyderabad</p>
+</header>
+<div class="stripe"><div class="s"></div><div class="w"></div><div class="g"></div></div>
+
+<main>
+
+  <div class="patient-bar">
+    <div><label>Full Name</label><input id="p_name"></div>
+    <div><label>Age</label><input id="p_age" type="number"></div>
+    <div><label>Sex</label>
+      <select id="p_sex"><option value="M">Male</option><option value="F">Female</option></select>
+    </div>
+    <div><label>Registration No.</label><input id="p_reg"></div>
+    <div><label>Date</label><input id="p_date" type="date"></div>
+  </div>
+
+  <div class="section">
+    <h2>Anthropometry</h2>
+    <div class="grid">
+      <div><label>Height (cm)</label><input id="height" type="number" oninput="calc()"></div>
+      <div><label>Weight (kg)</label><input id="weight" type="number" oninput="calc()"></div>
+      <div><label>Waist Circumference (cm)</label><input id="waist" type="number" oninput="calc()"></div>
+      <div><label>Hip Circumference (cm)</label><input id="hip" type="number" oninput="calc()"></div>
+      <div><label>Neck Circumference (cm)</label><input id="neck" type="number" oninput="calc()"></div>
+      <div><label>Calf Circumference (cm)</label><input id="calf" type="number" oninput="calc()"></div>
+      <div><label>Mid-Arm Circumference / MUAC (cm)</label><input id="muac" type="number" oninput="calc()"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Bedside Sarcopenia Tests</h2>
+    <div class="grid">
+      <div><label>Handgrip Strength, dominant hand (kg)</label><input id="grip" type="number" oninput="calc()"></div>
+      <div><label>4-metre Gait Time (seconds)</label><input id="gait" type="number" oninput="calc()"></div>
+      <div><label>Chair Stand Test — 5 rises (seconds)</label><input id="chair" type="number" oninput="calc()"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Core Metabolic Markers</h2>
+    <div class="grid">
+      <div><label>Fasting Glucose (mg/dL)</label><input id="glucose" type="number" oninput="calc()"></div>
+      <div><label>Fasting Insulin (µIU/mL)</label><input id="insulin" type="number" oninput="calc()"></div>
+      <div><label>Fasting Triglycerides (mg/dL)</label><input id="tg" type="number" oninput="calc()"></div>
+      <div><label>HbA1c (%)</label><input id="hba1c" type="number" step="0.1" oninput="calc()"></div>
+      <div><label>C-Peptide (ng/mL)</label><input id="cpep" type="number" step="0.01" oninput="calc()"></div>
+      <div><label>Pro-insulin (pmol/L)</label><input id="proinsulin" type="number" step="0.1" oninput="calc()"></div>
+      <div><label>Faecal Elastase (mcg/g) — if malabsorption suspected</label><input id="elastase" type="number" oninput="calc()"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Micronutrients</h2>
+    <div class="grid">
+      <div><label>Vitamin B12 (pg/mL)</label><input id="b12" type="number" oninput="calc()"></div>
+      <div><label>Folic Acid (ng/mL)</label><input id="folate" type="number" step="0.1" oninput="calc()"></div>
+      <div><label>25(OH) Vitamin D (ng/mL)</label><input id="vitd" type="number" oninput="calc()"></div>
+      <div><label>Serum Calcium (mg/dL)</label><input id="calcium" type="number" step="0.1" oninput="calc()"></div>
+      <div><label>Serum Ferritin (ng/mL)</label><input id="ferritin" type="number" oninput="calc()"></div>
+      <div><label>Transferrin Saturation (%)</label><input id="tsat" type="number" oninput="calc()"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Lifestyle</h2>
+    <div class="grid">
+      <div><label>Cigarettes per day</label><input id="cigs" type="number" oninput="calc()"></div>
+      <div><label>Years smoked</label><input id="smokeyears" type="number" oninput="calc()"></div>
+      <div><label>Alcohol volume per drink (ml)</label><input id="alcvol" type="number" oninput="calc()"></div>
+      <div><label>Alcohol % ABV (Beer~5, Whisky~40, Wine~12, Toddy~6)</label><input id="alcabv" type="number" oninput="calc()"></div>
+      <div><label>Drinks per week</label><input id="alcweek" type="number" oninput="calc()"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Body Composition (BIA / DEXA / Imaging — fill if available)</h2>
+    <div class="grid">
+      <div><label>SMI (kg/m²)</label><input id="smi" type="number" step="0.1" oninput="calc()"></div>
+      <div><label>Visceral Fat Area — BIA/MRI/CT (cm²)</label><input id="vat" type="number" oninput="calc()"></div>
+      <div><label>Phase Angle (degrees)</label><input id="phase" type="number" step="0.1" oninput="calc()"></div>
+      <div><label>Body Fat (%)</label><input id="bodyfat" type="number" step="0.1" oninput="calc()"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="results">
+      <h2>Calculated Results</h2>
+      <div class="gaugerow">
+        <div class="gaugebox">
+          <div class="gtitle">HOMA-IR</div>
+          <div class="gaugewrap"><div class="gaugearc"></div><div class="gaugemask"></div>
+            <div class="needle" id="needle_homa"></div><div class="needlebase"></div></div>
+          <div class="gval" id="gval_homa">—</div>
+          <div class="gcut">India cutoff: above 2.3</div>
+        </div>
+        <div class="gaugebox">
+          <div class="gtitle">TyG Index</div>
+          <div class="gaugewrap"><div class="gaugearc"></div><div class="gaugemask"></div>
+            <div class="needle" id="needle_tyg"></div><div class="needlebase"></div></div>
+          <div class="gval" id="gval_tyg">—</div>
+          <div class="gcut">India cutoff: above 8.82 (ln scale)</div>
+        </div>
+        <div class="gaugebox">
+          <div class="gtitle">BMI</div>
+          <div class="gaugewrap"><div class="gaugearc"></div><div class="gaugemask"></div>
+            <div class="needle" id="needle_bmi"></div><div class="needlebase"></div></div>
+          <div class="gval" id="gval_bmi">—</div>
+          <div class="gcut">India screening cutoff: above 23</div>
+        </div>
+      </div>
+      <div class="rgrid" id="resultsGrid"></div>
+      <p class="note">All India-specific cutoffs (HOMA-IR, TyG Index, CWR, sarcopenia thresholds) per Dr. Muddu Surendra Nehru MD, Professor of Medicine, HOMA Healthcare Center, RSSDI Life Member 8058. Phenotype (TOFI/NWCO/MONW) thresholds are proposed operational cutoffs from published Indian cohort data, not universal consensus. This tool supports clinical judgement — it does not replace it.</p>
+    </div>
+    <div class="footer no-print">
+      <button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
+    </div>
+  </div>
+
+</main>
+
+<script>
+function num(id){ const v = parseFloat(document.getElementById(id).value); return isNaN(v) ? null : v; }
+function card(label, value, unit, status){
+  // status: 'normal' | 'abnormal' | 'pending'
+  const tagText = status === 'normal' ? 'Normal' : status === 'abnormal' ? 'Flag' : '—';
+  return `<div class="rcard ${status}">
+    <div class="lbl">${label}</div>
+    <div class="val">${value !== null ? value : '—'} <span style="font-size:.65em;font-weight:400;">${value!==null?unit:''}</span></div>
+    <span class="tag">${tagText}</span>
+  </div>`;
+}
+
+function setGauge(id, valueId, value, min, max, decimals){
+  const needle = document.getElementById('needle_'+id);
+  const label = document.getElementById('gval_'+id);
+  if(value===null){ needle.style.transform='rotate(-90deg)'; label.textContent='—'; return; }
+  let pct = (value - min) / (max - min);
+  pct = Math.max(0, Math.min(1, pct));
+  const angle = (pct * 180) - 90; // -90deg to +90deg
+  needle.style.transform = 'rotate('+angle+'deg)';
+  label.textContent = value.toFixed(decimals);
+}
+
+function calc(){
+  const height=num('height'), weight=num('weight'), waist=num('waist'), hip=num('hip'),
+        neck=num('neck'), calf=num('calf'), sex=document.getElementById('p_sex').value,
+        glucose=num('glucose'), insulin=num('insulin'), tg=num('tg'),
+        grip=num('grip'), cigs=num('cigs'), smokeyears=num('smokeyears'),
+        alcvol=num('alcvol'), alcabv=num('alcabv'), alcweek=num('alcweek'),
+        b12=num('b12'), vitd=num('vitd'), ferritin=num('ferritin');
+
+  let out = [];
+
+  // BMI
+  let bmi = (height && weight) ? (weight/((height/100)**2)) : null;
+  out.push(card('BMI', bmi?bmi.toFixed(1):null, 'kg/m²', bmi===null?'pending':(bmi<23?'normal':'abnormal')));
+
+  // WHR
+  let whr = (waist && hip) ? (waist/hip) : null;
+  let whrAbn = whr!==null && ((sex==='M'&&whr>0.90)||(sex==='F'&&whr>0.85));
+  out.push(card('Waist-to-Hip Ratio', whr?whr.toFixed(2):null, '', whr===null?'pending':(whrAbn?'abnormal':'normal')));
+
+  // WHtR
+  let whtr = (waist && height) ? (waist/height) : null;
+  out.push(card('Waist-to-Height Ratio', whtr?whtr.toFixed(2):null, '', whtr===null?'pending':(whtr>0.5?'abnormal':'normal')));
+
+  // Waist cutoff check
+  let waistAbn = waist!==null && ((sex==='M'&&waist>90)||(sex==='F'&&waist>80));
+  out.push(card('Waist Circumference', waist, 'cm', waist===null?'pending':(waistAbn?'abnormal':'normal')));
+
+  // CWR
+  let cwr = (calf && waist) ? (calf/waist) : null;
+  out.push(card('CWR (Dr. Nehru Method)', cwr?cwr.toFixed(2):null, '', cwr===null?'pending':(cwr<0.35?'abnormal':'normal')));
+
+  // Neck circumference
+  let neckAbn = neck!==null && ((sex==='M'&&neck>37)||(sex==='F'&&neck>34));
+  out.push(card('Neck Circumference', neck, 'cm', neck===null?'pending':(neckAbn?'abnormal':'normal')));
+
+  // HOMA-IR
+  let homa = (glucose && insulin) ? ((glucose*insulin)/405) : null;
+  out.push(card('HOMA-IR (India cutoff >2.3)', homa?homa.toFixed(2):null, '', homa===null?'pending':(homa>2.3?'abnormal':'normal')));
+
+  // TyG
+  let tyg = (tg && glucose) ? Math.log(tg*glucose/2) : null;
+  out.push(card('TyG Index (India cutoff >8.82, ln scale)', tyg?tyg.toFixed(2):null, '', tyg===null?'pending':(tyg>8.82?'abnormal':'normal')));
+
+  // Handgrip
+  let gripAbn = grip!==null && ((sex==='M'&&grip<22.93)||(sex==='F'&&grip<10.76));
+  out.push(card('Handgrip Strength', grip, 'kg', grip===null?'pending':(gripAbn?'abnormal':'normal')));
+
+  // Pack-years
+  let pack = (cigs && smokeyears) ? ((cigs/20)*smokeyears) : null;
+  out.push(card('Pack-Years', pack?pack.toFixed(1):null, '', pack===null?'pending':(pack>10?'abnormal':'normal')));
+
+  // Alcohol units/week
+  let units = (alcvol && alcabv && alcweek) ? ((alcvol*alcabv/1000)*alcweek) : null;
+  let unitsAbn = units!==null && ((sex==='M'&&units>21)||(sex==='F'&&units>14));
+  out.push(card('Alcohol Units / Week', units?units.toFixed(1):null, '', units===null?'pending':(unitsAbn?'abnormal':'normal')));
+
+  // B12
+  out.push(card('Vitamin B12', b12, 'pg/mL', b12===null?'pending':(b12<200?'abnormal':'normal')));
+
+  // Vitamin D
+  out.push(card('Vitamin D (25-OH)', vitd, 'ng/mL', vitd===null?'pending':(vitd<20?'abnormal':'normal')));
+
+  // Ferritin
+  out.push(card('Ferritin', ferritin, 'ng/mL', ferritin===null?'pending':(ferritin<30?'abnormal':'normal')));
+
+  // Phenotype flag
+  let phenoFlags = [];
+  if (bmi!==null && bmi<23){
+    if (waistAbn) phenoFlags.push('NWCO');
+    if (homa!==null && (homa>2.3 || (tyg!==null && tyg>8.82))) phenoFlags.push('MONW');
+  }
+  let phenoText = phenoFlags.length ? phenoFlags.join(' + ') : (bmi!==null?'None flagged':null);
+  out.push(card('Phenotype Screen (BMI<23)', phenoText, '', phenoText===null?'pending':(phenoFlags.length?'abnormal':'normal')));
+
+  document.getElementById('resultsGrid').innerHTML = out.join('');
+
+  // Gauges — scaled so the cutoff sits inside the yellow/orange zone (~55-70% across)
+  setGauge('homa', 'gval_homa', homa, 0, 6, 2);
+  setGauge('tyg', 'gval_tyg', tyg, 7.5, 10.5, 2);
+  setGauge('bmi', 'gval_bmi', bmi, 15, 32, 1);
+}
+calc();
+</script>
+
+</body>
+</html>
